@@ -22,7 +22,6 @@ async function buscarPagina(cursor: string, tentativas = 4): Promise<OpenAlexLis
       return (await resposta.json()) as OpenAlexListResponse<OpenAlexWork>;
     }
 
-    // 429 = muitas requisições, 5xx = erro do servidor: vale tentar de novo
     if (resposta.status === 429 || resposta.status >= 500) {
       console.log(`HTTP ${resposta.status}, tentativa ${i}/${tentativas}...`);
       await esperar(2000 * i);
