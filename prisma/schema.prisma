@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Work {
+  id          String   @id
+  doi         String?
+  title       String?
+  year        Int?
+  type        String?
+  language    String?
+  sourceName  String?
+  oaStatus    String?
+  citations   Int      @default(0)
+  topic       String?
+  isXpac      Boolean  @default(false)
+  authorships Authorship[]
+
+  @@index([year])
+}
+
+model Author {
+  id          String   @id
+  name        String
+  orcid       String?
+  authorships Authorship[]
+}
+
+model Institution {
+  id          String   @id
+  name        String
+  ror         String?
+  countryCode String?
+  authorships AuthorshipInstitution[]
+
+  @@index([countryCode])
+}
+
+model Authorship {
+  id           Int      @id @default(autoincrement())
+  work         Work     @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId       String
+  author       Author   @relation(fields: [authorId], references: [id])
+  authorId     String
+  position     String?
+  institutions AuthorshipInstitution[]
+}
+
+model AuthorshipInstitution {
+  authorship    Authorship  @relation(fields: [authorshipId], references: [id], onDelete: Cascade)
+  authorshipId  Int
+  institution   Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+
+  @@id([authorshipId, institutionId])
+}

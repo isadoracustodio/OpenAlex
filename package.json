@@ -1,0 +1,33 @@
+{
+  "name": "openalex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "start": "tsx --env-file=.env src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "fetch": "tsx --env-file=.env src/etl/fetchWorks.ts",
+    "check": "tsx --env-file=.env src/scripts/conferir.ts",
+    "load": "tsx --env-file=.env src/etl/load.ts",
+    "export": "tsx --env-file=.env src/scripts/exportCsv.ts",
+    "instituicao": "tsx --env-file=.env src/scripts/buscarInstituicao.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
